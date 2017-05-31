@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 BASE_DIR = dirname(dirname(abspath(__file__)))
 load_dotenv(join(BASE_DIR, '.env'))
 name = environ.get("SITE_FOLDER")
+app = environ.get("APP_NAME")
 
 
 def create_dir(name):
@@ -33,7 +34,7 @@ def emperor_writer(name):
 
 
 def uwsgi_writer(name):
-    cfg = "[uwsgi]\nfolder={}\n\nchdir=/home/%(folder)\nwsgi-file=/home/%(folder)/qprob/wsgi.py\nvirtualenv=/usr/local/anaconda/envs/%(folder)\n\ncheaper-algo = spare\ncheaper = 2\ncheaper-initial = 5\nworkers = 10\ncheaper-step = 1\nprocesses = 10\n\nuid=www-data\ngid=www-data\n\nsocket=/home/%(folder)/uwsgi.sock\nchmod-socket=660\nchown-socket=www-data:www-data\n\n#harakiri=10\nthunder-lock=true\nvaccum=true\ndie-on-term=true\nenable-threads=true\n\npidfile=/tmp/%(folder).pid\ndisable-logging = true\nlogto=/home/%(folder)/logs/uwsgi.log".format(name)
+    cfg = "[uwsgi]\nfolder={0}\n\nchdir=/home/%(folder)\nwsgi-file=/home/%(folder)/{1}/wsgi.py\nvirtualenv=/usr/local/anaconda/envs/%(folder)\n\ncheaper-algo = spare\ncheaper = 2\ncheaper-initial = 5\nworkers = 10\ncheaper-step = 1\nprocesses = 10\n\nuid=www-data\ngid=www-data\n\nsocket=/home/%(folder)/uwsgi.sock\nchmod-socket=660\nchown-socket=www-data:www-data\n\n#harakiri=10\nthunder-lock=true\nvaccum=true\ndie-on-term=true\nenable-threads=true\n\npidfile=/tmp/%(folder).pid\ndisable-logging = true\nlogto=/home/%(folder)/logs/uwsgi.log".format(name, app)
 
     with open('/home/{}/uwsgi/uwsgi/uwsgi.ini'.format(name), 'w') as f:
         f.write(cfg)

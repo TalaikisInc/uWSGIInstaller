@@ -2,7 +2,10 @@
 
 # Reqs
 
-Should have SITE_FOLDER environment variable, wgere SITE_FOLDER is /home/[SITE_FOLDER]
+Should have following environment variables:
+
+* SITE_FOLDER, where SITE_FOLDER is /home/[SITE_FOLDER]
+* APP_NAME, where APP_NAME is /home/[SITE_FOLDER]/[APP_NAME], where *wsgi.py* lives
 
 # How it works
 
